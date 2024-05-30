@@ -11,21 +11,34 @@ import tqdm
 
 
 # 定义类别映射关系
-classes = {
-    "ignore": 0,
-    "traffic-signal-system": 1,
-    "traffic-guidance-system": 2,
-    "restricted-elevated": 3,
-    "cabinet": 4,
-    "backpack-box": 5,
-    "off-site": 6,
-    "Gun-type-Camera": 7,
-    "Dome-Camera": 8,
-    "Flashlight": 9,
-    "off-site-other": 10,
-    "b-Flashlight": 11
-}
+# classes = {
+#     "ignore": 0,
+#     "traffic-signal-system": 1,
+#     "traffic-guidance-system": 2,
+#     "restricted-elevated": 3,
+#     "cabinet": 4,
+#     "backpack-box": 5,
+#     "off-site": 6,
+#     "Gun-type-Camera": 7,
+#     "Dome-Camera": 8,
+#     "Flashlight": 9,
+#     "off-site-other": 10,
+#     "b-Flashlight": 11
+# }
 
+classes = {
+    "traffic-signal-system": 0,
+    "traffic-guidance-system": 1,
+    "restricted-elevated": 2,
+    "cabinet": 3,
+    "backpack-box": 4,
+    "off-site": 5,
+    "Gun-type-Camera": 6,
+    "Dome-Camera": 7,
+    "Flashlight": 8,
+    "off-site-other": 9,
+    "b-Flashlight": 10
+}
 
 
 #定义为一个函数 check_AND_make_path 如果不存在目标文件夹则创建
@@ -115,7 +128,7 @@ def convert_annotations(xml_file, dest_folder):
 xml_files = ["annotations_lcx.xml", "annotations_lyy.xml", "annotations_wjk.xml", "annotations_wsj0.xml", 
              "annotations_wsj2.xml", "annotations_xk0.xml", "annotations_xk1.xml", "annotations_xk2.xml",
              "annotations_yjc.xml",]
-dest_folder = "./hefei_yolo_format_v2.0"
+dest_folder = "./hefei_yolo_format_v2.2"
 for xml_file in xml_files:
     print(f"Processing {xml_file}")
     convert_annotations(xml_file, dest_folder)

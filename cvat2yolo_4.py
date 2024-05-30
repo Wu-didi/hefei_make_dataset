@@ -100,6 +100,11 @@ def convert_annotations(xml_file, dest_folder):
                         cls = 'traffic-signal-system_good'
                     elif state in ['all-off', 'all-on', 'abnormal']:
                         cls = 'traffic-signal-system_bad'
+                elif cls == "traffic-guidance-system":
+                    if state == 'normal':
+                        cls = 'traffic-guidance-system_good'
+                    elif state in ['black-screen', 'abnormal']:
+                        cls = 'traffic-guidance-system_bad'
                 elif cls in class_state_dict:
                     if state == 'normal':
                         cls = class_state_dict[cls][0]
@@ -134,7 +139,7 @@ def convert_annotations(xml_file, dest_folder):
 xml_files = ["annotations_lcx.xml", "annotations_lyy.xml", "annotations_wjk.xml", "annotations_wsj0.xml", 
              "annotations_wsj2.xml", "annotations_xk0.xml", "annotations_xk1.xml", "annotations_xk2.xml",
              "annotations_yjc.xml",]
-dest_folder = "./hefei_yolo_good_bad_format_v2.1"
+dest_folder = "./hefei_yolo_format_v2.3"
 for xml_file in xml_files:
     print(f"Processing {xml_file}")
     convert_annotations(xml_file, dest_folder)
