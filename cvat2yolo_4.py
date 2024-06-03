@@ -11,7 +11,28 @@ import tqdm
 
 
 # 定义类别映射关系
-classes = {
+# classes = {
+#     "ignore": 0,
+#     "traffic-signal-system_good": 1,
+#     "traffic-signal-system_bad": 2,
+#     "traffic-guidance-system_good": 3,
+#     "traffic-guidance-system_bad": 4,
+#     "restricted-elevated_good": 5,
+#     "restricted-elevated_bad": 6,
+#     "cabinet_good": 7,
+#     "cabinet_bad": 8,
+#     "backpack-box_good": 9,
+#     "backpack-box_bad": 10,
+#     "off-site": 11,
+#     "Gun-type-Camera": 12,
+#     "Dome-Camera": 13,
+#     "Flashlight": 14,
+#     "off-site-other": 15,
+#     "b-Flashlight": 16
+# }
+
+# 定义类别映射关系
+train_classes = {
     "ignore": 0,
     "traffic-signal-system_good": 1,
     "traffic-signal-system_bad": 2,
@@ -27,8 +48,26 @@ classes = {
     "Gun-type-Camera": 12,
     "Dome-Camera": 13,
     "Flashlight": 14,
-    "off-site-other": 15,
-    "b-Flashlight": 16
+    "b-Flashlight": 15
+}
+
+# 定义类别映射关系
+val_classes = {
+    "traffic-signal-system_good": 1,
+    "traffic-signal-system_bad": 2,
+    "traffic-guidance-system_good": 3,
+    "traffic-guidance-system_bad": 4,
+    "restricted-elevated_good": 5,
+    "restricted-elevated_bad": 6,
+    "cabinet_good": 7,
+    "cabinet_bad": 8,
+    "backpack-box_good": 9,
+    "backpack-box_bad": 10,
+    "off-site": 11,
+    "Gun-type-Camera": 12,
+    "Dome-Camera": 13,
+    "Flashlight": 14,
+    "b-Flashlight": 15
 }
 
 class_state_dict = {
@@ -111,10 +150,17 @@ def convert_annotations(xml_file, dest_folder):
                     elif state == 'abnormal':
                         cls = class_state_dict[cls][1]
                 
-                if cls not in classes:
-                    continue
+                if image in train_files:
+                    if cls not in train_classes:
+                        continue
+                    cls_id = train_classes[cls]
+                    
+                else:
+                    if cls not in val_classes:
+                        continue
+                    cls_id = val_classes[cls]
+                    
 
-                cls_id = classes[cls]
 
                 xmin = float(obj.get('xtl'))
                 ymin = float(obj.get('ytl'))
@@ -139,7 +185,7 @@ def convert_annotations(xml_file, dest_folder):
 xml_files = ["annotations_lcx.xml", "annotations_lyy.xml", "annotations_wjk.xml", "annotations_wsj0.xml", 
              "annotations_wsj2.xml", "annotations_xk0.xml", "annotations_xk1.xml", "annotations_xk2.xml",
              "annotations_yjc.xml",]
-dest_folder = "./hefei_yolo_format_v2.3"
+dest_folder = "./hefei_yolo_format_v2.5"
 for xml_file in xml_files:
     print(f"Processing {xml_file}")
     convert_annotations(xml_file, dest_folder)
